@@ -50,6 +50,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "history": "^4.9.0",
     "react-router-dom": "^5.0.1",
-    "react-test-renderer": "16.8.0"
+    "react-test-renderer": "16.8.0",
+    "react-transition-group": "^4.3.0"
   }
 }

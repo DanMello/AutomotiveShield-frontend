@@ -1,0 +1,90 @@
+.mainContainer {
+  background: rgba(40,42,45,0.85);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logoContainer {
+  z-index: 999;
+  width: 100px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo {
+  width: 100%;
+}
+
+.navContainer {
+  z-index: 999;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.bar {
+  background: white;
+  height: 2px;
+  width: 25px;
+  margin-top: 5px;
+  transition: ease 0.2s
+}
+
+.changeOne {
+  transform: translate(0px, 2px) rotate(45deg);
+}
+
+.changeTwo {
+  transform: translate(0px, -4px) rotate(-45deg);
+}
+
+.navPortal {
+  transition: display .25s ease-in-out;
+}
+
+.navPortalContainer {
+  background: #282a2d;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  display: flex;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  justify-content: center;
+  transition: visibility 300ms, opacity 300ms ease-in-out;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.linkContainer {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.link {
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.active {
+  color: #c7d300;
+}
+
+.link:hover {
+  color: #c7d300;
+}
+
+.fixed {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
