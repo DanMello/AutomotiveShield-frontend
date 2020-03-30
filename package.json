@@ -1,7 +1,7 @@
 {
   "name": "automotiveshield",
   "version": "1.0.0",
-  "description": "A react starting point with all you need to get started with webapp",
+  "description": "Front-end for automotiveshield website",
   "main": "index.js",
   "peerDependencies": {
     "react": "^16.5.2",
