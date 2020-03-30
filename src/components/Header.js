@@ -1,54 +1,137 @@
-import React, {useState, useEffect } from 'react';
-import { Transition } from 'react-transition-group';
-import { NavLink, Link } from 'react-router-dom'
-import Styles from 'styles/Header.css';
+import React, {useState, useEffect, useRef} from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import DesktopStyles from 'styles/DesktopHeader.css';
+import MobileStyles from 'styles/MobileHeader.css';
+import { animated, useSpring, useChain, useTrail } from 'react-spring';
 
-export default function Header() {
+function DeskTopHeader () {
+  return (
+    <div className={DesktopStyles.headerContainer}>
+      <Link to={'/'} className={DesktopStyles.logoContainer}>
+        <img className={DesktopStyles.logo} src={'assets/autologo.png'} />
+      </Link>
+      <nav className={DesktopStyles.navContainer}>
+        <ul className={DesktopStyles.ul}>
+          <li className={DesktopStyles.li}>
+            <NavLink 
+              activeClassName={DesktopStyles.linkActive} 
+              className={DesktopStyles.link}
+              exact={true}
+              to={'/'}
+            >
+            Home
+            </NavLink>
+          </li>
+          <li className={DesktopStyles.li}>
+            <NavLink
+                activeClassName={DesktopStyles.linkActive} 
+                className={DesktopStyles.link}
+                to={'/about'}
+              >
+              About
+              </NavLink>
+          </li>
+          <li className={DesktopStyles.li}>
+            <NavLink
+                activeClassName={DesktopStyles.linkActive} 
+                className={DesktopStyles.link}
+                to={'/work'}
+              >
+              Our Work
+              </NavLink>
+          </li>
+          <li className={DesktopStyles.li}>
+            <NavLink
+                activeClassName={DesktopStyles.linkActive} 
+                className={DesktopStyles.link}
+                to={'/contact'}
+              >
+              Contact
+              </NavLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
 
+function MobileHeader () {
   const [isOpen, toggleOpen] = useState(false);
-  const transitionStyles = {
-    entering: { opacity: .5, visibility: 'visible' },
-    entered:  { opacity: .5, visibility: 'visible' },
-    exiting:  { opacity: 0, visibility: 'hidden' },
-    exited:  { opacity: 0, visibility: 'hidden' }
-  };
-
+  const containerRef = useRef();
+  const containerProps = useSpring({
+    ref: containerRef, 
+    height: isOpen ? '100%' : '0%'
+  });
+  const items = [
+    {to: '/', name: 'Home'},
+    {to: '/about', name: 'About'},
+    {to: '/work', name: 'Our Work'},
+    {to: '/contact', name: 'Contact'}
+  ];
+  const itemsRef = useRef();
+  const itemProps = useTrail(items.length, {
+    ref: itemsRef, 
+    opacity: isOpen ? 1 : 0,
+    x: isOpen ? 0 : -100,
+    from: { opacity: 0, x: -100 },
+  });
+  
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add(Styles.fixed)
+      document.body.classList.add(MobileStyles.fixed)
     } else {
-      document.body.classList.remove(Styles.fixed)
+      document.body.classList.remove(MobileStyles.fixed)
     };
   }, [isOpen]);
+  
+  useChain(isOpen ? [containerRef, itemsRef] : [itemsRef, containerRef], [0, isOpen ? 0.1 : 0.6]);
 
   function toggleMenu() {
     toggleOpen(prevState => !prevState);
   };
-
   return (
-    <div className={Styles.mainContainer}>
-      <Link className={Styles.logoContainer} to='/home'>
-        <img src='assets/918logobig.png' className={Styles.logo} />
+    <div className={MobileStyles.mainContainer}>
+      <Link className={MobileStyles.logoContainer} to='/home'>
+        <img src='assets/autologo.png' className={MobileStyles.logo} />
       </Link>
       <div></div>
-      <div onClick={toggleMenu} className={Styles.navContainer}>
-        <div className={!isOpen ? Styles.bar : [Styles.bar, Styles.changeOne].join(" ")}></div>
-        <div className={!isOpen ? Styles.bar : null}></div>
-        <div className={!isOpen ? Styles.bar : [Styles.bar, Styles.changeTwo].join(" ")}></div>
+      <div onClick={toggleMenu} className={MobileStyles.navContainer}>
+        <div className={!isOpen ? MobileStyles.bar : [MobileStyles.bar, MobileStyles.changeOne].join(" ")}></div>
+        <div className={!isOpen ? MobileStyles.bar : null}></div>
+        <div className={!isOpen ? MobileStyles.bar : [MobileStyles.bar, MobileStyles.changeTwo].join(" ")}></div>
       </div>
-      <Transition timeout={300} in={isOpen}>
-        {state => (
-          <div className={Styles.navPortalContainer} style={{...transitionStyles[state]}}>
-          <div className={Styles.linkContainer}>
-            <NavLink activeClassName={Styles.active} className={Styles.link} to='/'>Home</NavLink>
-            <NavLink activeClassName={Styles.active} className={Styles.link} to='/about'>About</NavLink>
-            <NavLink activeClassName={Styles.active} className={Styles.link} to='/services'>Services</NavLink>
-            <NavLink activeClassName={Styles.active} className={Styles.link} to='/gallery'>Gallery</NavLink>
-            <NavLink activeClassName={Styles.active} className={Styles.link} to='/contact'>Contact</NavLink>
-          </div>
+      <animated.div style={containerProps} className={MobileStyles.navPortalContainer}>
+        <div className={MobileStyles.linkContainer}>
+          {itemProps.map((props, index) => {
+            return (
+              <animated.div key={index} style={props} className={MobileStyles.animatedLinkContainer} onClick={toggleMenu}>
+                <NavLink 
+                  activeClassName={MobileStyles.active}
+                  className={MobileStyles.link}
+                  exact={true}
+                  to={items[index].to}
+                  >
+                  {items[index].name}
+                </NavLink>
+              </animated.div>
+            );
+          })}
         </div>
-        )}
-      </Transition>
+      </animated.div>
     </div>
   );
+};
+
+export default function Header() {
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange);
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange);
+    };
+  }, []);
+  function handleWindowSizeChange () {
+    setScreenSize(window.innerWidth);
+  };
+  return screenSize > 768 ? <DeskTopHeader /> : <MobileHeader />
 };

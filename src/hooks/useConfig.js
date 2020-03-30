@@ -1,13 +1,14 @@
 export default function useConfig(hostname) {
-  let config;
+  let config = {};
+  console.log(hostname)
   if (hostname === 'localhost') {
-    config = {url: 'http://localhost:3001', device: 'desktop', env: 'development', isMobile: false }
+    config = {url: 'http://localhost:3005', device: 'desktop', env: 'development', isMobile: false }
   } else if (/10./.test(hostname)) {
-    config = {url: 'http://' + hostname + ':3001', device: 'mobile', env: 'development', isMobile: true }
-  } else if (hostname === 'yourdomain.com') {
-    config = {url: 'https://yourdomain.com', device: 'desktop', env: 'production', isMobile: false }
-  } else if (hostname === 'm.yourdomain.com') {
-    config = {url: 'https://m.yourdomain.com', device: 'mobile', env: 'production', isMobile: true }
+    config = {url: 'http://' + hostname + ':3005', device: 'mobile', env: 'development', isMobile: true }
+  } else if (hostname === 'ams.mellocloud.com') {
+    config = {url: 'https://ams.mellocloud.com', device: 'desktop', env: 'production', isMobile: false }
+  } else if (hostname === 'amsm.mellocloud.com') {
+    config = {url: 'https://amsm.mellocloud.com', device: 'mobile', env: 'production', isMobile: true }
   }
   return config;
 };

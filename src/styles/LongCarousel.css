@@ -1,0 +1,94 @@
+.container {
+  overflow: hidden;
+  cursor: move;
+  position: relative;
+  width: 100%;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
+}
+
+.outSideContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.arrowLeft, .arrowRight {
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.arrowLeft {
+  margin-right: 20px;
+}
+
+.arrowRight {
+  margin-left: 20px;
+}
+
+.animatedContainer {
+  display: flex;
+}
+
+.flexContainer {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.float {
+  position: fixed;
+  top: 0;
+  padding: 20px;
+  color: white;
+  background: black;
+  z-index: 999;
+}
+
+.carouselSubContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.carouselButtonContainer {
+  display: flex;
+  /* background: red; */
+  overflow: hidden;
+  max-width: 120px;
+}
+
+.carouselButton {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 20px;
+  flex-shrink: 0;
+}
+
+.dotsContainer {
+
+}
+
+
+@media (max-width: 800px) {
+  .arrowLeft, .arrowRight {
+    font-size: 25px;
+  }
+  .arrowLeft {
+    margin-right: 10px;
+  }
+  .arrowRight {
+    margin-left: 10px;
+  }
+}

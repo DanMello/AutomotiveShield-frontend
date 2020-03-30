@@ -1,6 +1,11 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import App from './components/App';
+import Header from './components/Header';
+import Home from './components/Home';
+import About from './components/About';
+import Work from './components/Work';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 
 import useConfig from './hooks/useConfig';
 
@@ -32,9 +37,14 @@ function AppRoutes() {
       env: env
     }}
     >
+      <Header />
       <Switch>
-        <PropsRoute path="/" exact strict component={App}/>
+        <PropsRoute path="/" exact strict component={Home} />
+        <PropsRoute path="/about" exact strict component={About} />
+        <PropsRoute path="/work" exact strict component={Work} />
+        <PropsRoute path="/contact" exact strict component={Contact} />
       </Switch>
+      <Footer />
     </ConfigContext.Provider>
   );
 };

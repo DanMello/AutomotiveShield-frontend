@@ -1,5 +1,5 @@
 {
-  "name": "fresh-react-webapp",
+  "name": "automotiveshield",
   "version": "1.0.0",
   "description": "A react starting point with all you need to get started with webapp",
   "main": "index.js",
@@ -37,6 +37,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^2.3.1",
     "uglifyjs-webpack-plugin": "^2.1.2",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
@@ -45,12 +46,17 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@farbenmeer/react-spring-slider": "^1.1.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "history": "^4.9.0",
+    "lodash-es": "^4.17.15",
     "react-router-dom": "^5.0.1",
+    "react-spring": "^9.0.0-beta.34",
     "react-test-renderer": "16.8.0",
-    "react-transition-group": "^4.3.0"
+    "react-transition-group": "^4.3.0",
+    "react-use-gesture": "^6.0.14"
   }
 }

@@ -1,15 +1,15 @@
 .mainContainer {
-  background: rgba(40,42,45,0.85);
+  background: #131921;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .logoContainer {
-  z-index: 999;
-  width: 100px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  z-index: 998;
+  width: 150px;
 }
 
 .logo {
@@ -38,33 +38,27 @@
   transform: translate(0px, -4px) rotate(-45deg);
 }
 
-.navPortal {
-  transition: display .25s ease-in-out;
-}
-
 .navPortalContainer {
-  background: #282a2d;
-  height: 100%;
+  overflow: hidden;
+  background: #131921;
   width: 100%;
   position: fixed;
+  z-index: 997;
   top: 0;
-  display: flex;
-  opacity: 0;
   color: white;
   font-size: 20px;
   justify-content: center;
-  transition: visibility 300ms, opacity 300ms ease-in-out;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .linkContainer {
-  margin-top: 70px;
+  margin-top: 80px;
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+
+.animatedLinkContainer {
+  padding: 10px;
 }
 
 .link {
@@ -72,15 +66,14 @@
   font-weight: bold;
   font-size: 25px;
   text-decoration: none;
-  padding: 10px;
 }
 
 .active {
-  color: #c7d300;
+  color: #ff9f00;
 }
 
 .link:hover {
-  color: #c7d300;
+  color: #ff9f00;
 }
 
 .fixed {
