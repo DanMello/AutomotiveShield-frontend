@@ -1,12 +1,6 @@
 .container {
   height: 600px;
+  width: 100%;
+  background: #f1f1f1;
   /* height: 100vh; */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-image:
-  linear-gradient(rgba(0, 0, 0, 0.6),
-  rgba(0, 0, 0, 0.6)), 
-  url('/assets/carone.jpg');
-
 }

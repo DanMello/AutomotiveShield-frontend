@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  background: #f1f1f1;
+  justify-content: center;
+  min-height: 600px;
+}
+
+.subContainer {
+  max-width: 900px;
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.loaderContainer {
+  display: flex;
+  align-items: center;
+}
+
+.credentials {
+  font-size: 20px;
+  color: #444;
+}
+
+.icon {
+  margin-left: 10px;
+  color: green;
+}
+
+.heading {
+  margin-top: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #444;
+}
+
+.button {
+  padding: 10px;
+  margin-top: 20px;
+  background: orangered;
+  color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}

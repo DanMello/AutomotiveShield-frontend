@@ -53,6 +53,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "history": "^4.9.0",
     "lodash-es": "^4.17.15",
+    "query-string": "^6.11.1",
     "react-router-dom": "^5.0.1",
     "react-spring": "^9.0.0-beta.34",
     "react-test-renderer": "16.8.0",

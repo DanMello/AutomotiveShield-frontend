@@ -233,12 +233,15 @@ function SmallSlideShow () {
 
   useEffect(() => {
     setIntervalMethod(setInterval(() => setIndex(state => (state + 1) % 3), 4000));
+  }, []);
+  
+  useEffect(() => {
     return () => {
       if (intervalMethod) {
         clearInterval(intervalMethod);
       };
     };
-  }, []);
+  }, [intervalMethod]);
 
   return containerTransition.map(({ item, props, key }) => (
       <animated.div

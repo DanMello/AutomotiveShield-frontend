@@ -1,6 +1,5 @@
 export default function useConfig(hostname) {
   let config = {};
-  console.log(hostname)
   if (hostname === 'localhost') {
     config = {url: 'http://localhost:3005', device: 'desktop', env: 'development', isMobile: false }
   } else if (/10./.test(hostname)) {

@@ -13,12 +13,15 @@ export default function SlideShow({obj}) {
   
   useEffect(() => {
     setIntervalMethod(setInterval(() => setIndex(state => (state + 1) % 4), 4000));
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (intervalMethod) {
         clearInterval(intervalMethod);
       };
     };
-  }, []);
+  }, [intervalMethod])
 
   return (
     <div className={Styles.mainContainer}>
