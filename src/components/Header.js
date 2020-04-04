@@ -1,10 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { ConfigContext } from '../routes';
 import DesktopStyles from 'styles/DesktopHeader.css';
 import MobileStyles from 'styles/MobileHeader.css';
 import { animated, useSpring, useChain, useTrail } from 'react-spring';
 
-function DeskTopHeader () {
+function DeskTopHeader ({token}) {
   return (
     <div className={DesktopStyles.headerContainer}>
       <Link to={'/'} className={DesktopStyles.logoContainer}>
@@ -49,13 +50,24 @@ function DeskTopHeader () {
               Contact
               </NavLink>
           </li>
+          {token && 
+            <li className={DesktopStyles.li}>
+              <NavLink
+                  activeClassName={DesktopStyles.activeLink} 
+                  className={DesktopStyles.adminLink}
+                  to={'/adminPanel'}
+                >
+                Admin
+              </NavLink>
+            </li>
+          }
         </ul>
       </nav>
     </div>
   );
 };
 
-function MobileHeader () {
+function MobileHeader ({token}) {
   const [isOpen, toggleOpen] = useState(false);
   const containerRef = useRef();
   const containerProps = useSpring({
@@ -66,7 +78,8 @@ function MobileHeader () {
     {to: '/', name: 'Home'},
     {to: '/about', name: 'About'},
     {to: '/work', name: 'Our Work'},
-    {to: '/contact', name: 'Contact'}
+    {to: '/contact', name: 'Contact'},
+    {to: '/adminPanel', name: 'Admin', token: true}
   ];
   const itemsRef = useRef();
   const itemProps = useTrail(items.length, {
@@ -103,18 +116,33 @@ function MobileHeader () {
       <animated.div style={containerProps} className={MobileStyles.navPortalContainer}>
         <div className={MobileStyles.linkContainer}>
           {itemProps.map((props, index) => {
-            return (
-              <animated.div key={index} style={props} className={MobileStyles.animatedLinkContainer} onClick={toggleMenu}>
-                <NavLink 
-                  activeClassName={MobileStyles.active}
-                  className={MobileStyles.link}
-                  exact={true}
-                  to={items[index].to}
-                  >
-                  {items[index].name}
-                </NavLink>
-              </animated.div>
-            );
+            if (items[index].token && token) {
+              return (
+                <animated.div key={index} style={props} className={MobileStyles.animatedLinkContainer} onClick={toggleMenu}>
+                  <NavLink 
+                    activeClassName={MobileStyles.activeLink} 
+                    className={MobileStyles.adminLink}
+                    exact={true}
+                    to={items[index].to}
+                    >
+                    {items[index].name}
+                  </NavLink>
+                </animated.div>
+              );
+            } else if (!items[index].token) {
+              return (
+                <animated.div key={index} style={props} className={MobileStyles.animatedLinkContainer} onClick={toggleMenu}>
+                  <NavLink 
+                    activeClassName={MobileStyles.active}
+                    className={MobileStyles.link}
+                    exact={true}
+                    to={items[index].to}
+                    >
+                    {items[index].name}
+                  </NavLink>
+                </animated.div>
+              );
+            };
           })}
         </div>
       </animated.div>
@@ -124,6 +152,7 @@ function MobileHeader () {
 
 export default function Header() {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const { token } = useContext(ConfigContext);
   useEffect(() => {
     window.addEventListener('resize', handleWindowSizeChange);
     return () => {
@@ -133,5 +162,5 @@ export default function Header() {
   function handleWindowSizeChange () {
     setScreenSize(window.innerWidth);
   };
-  return screenSize > 768 ? <DeskTopHeader /> : <MobileHeader />
+  return screenSize > 768 ? <DeskTopHeader token={token}/> : <MobileHeader token={token}/>
 };

@@ -46,3 +46,19 @@
 .linkActive {
   color: #ff9f00;
 }
+
+.activeLink {
+  text-decoration: underline !important;
+}
+
+.adminLink {
+ padding: 10px;
+ background: #ff9f00;
+ color: white;
+ border-radius: 5px;
+ text-decoration: none;
+}
+
+.adminLink:hover {
+  opacity: .8;
+}

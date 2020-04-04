@@ -81,3 +81,21 @@
   position: fixed;
   width: 100%;
 }
+
+.activeLink {
+  text-decoration: underline !important;
+}
+
+.adminLink {
+ padding: 10px;
+ background: #ff9f00;
+ color: white;
+ font-weight: bold;
+ border-radius: 5px;
+ font-size: 25px;
+ text-decoration: none;
+}
+
+.adminLink:hover {
+  opacity: .8;
+}
