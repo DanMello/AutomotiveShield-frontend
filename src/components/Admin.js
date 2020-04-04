@@ -3,7 +3,7 @@ import { ConfigContext } from '../routes';
 import queryString from 'query-string' 
 import Styles from 'styles/Admin.css';
 
-export default function Admin ({history, location}) {
+export default function Admin ({history, location, createToken}) {
   const [login, setLogin] = useState({
     email: '',
     password: ''
@@ -11,10 +11,9 @@ export default function Admin ({history, location}) {
   const [activeInput, setActiveInput] = useState('');
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
-  const { url } = useContext(ConfigContext);
+  const { url, token } = useContext(ConfigContext);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const values = queryString.parse(location.search);
 
     if (token) {
@@ -75,8 +74,8 @@ export default function Admin ({history, location}) {
         throw new Error(response.message)
       };
       setResponse(response.message);
-      localStorage.setItem('token', response.token);
-      setTimeout(() => history.push('/adminPanel'), 2000);
+      createToken(response.token)
+      setTimeout(() => history.push('/adminPanel'), 500);
     }).catch(err => {
       setError(err.message)
     });

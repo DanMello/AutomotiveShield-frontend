@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 import useConfig from './hooks/useConfig';
+import useToken from './hooks/useToken';
 
 export const ConfigContext = React.createContext();
 
@@ -31,12 +32,14 @@ const PropsRoute = ({ component, ...rest }) => {
 function AppRoutes() {
   
   const { isMobile, url, env } = useConfig(window.location.hostname);
+  const { token, createToken, removeToken } = useToken(url);
   
   return (
     <ConfigContext.Provider value={{
       isMobile: isMobile,
       url: url,
-      env: env
+      env: env,
+      token: token
     }}
     >
       <Header />
@@ -45,8 +48,8 @@ function AppRoutes() {
         <PropsRoute path="/about" exact strict component={About} />
         <PropsRoute path="/work" exact strict component={Work} />
         <PropsRoute path="/contact" exact strict component={Contact} />
-        <PropsRoute path="/admin" exact strict component={Admin} />
-        <PropsRoute path="/adminPanel" exact strict component={AdminPanel} />
+        <PropsRoute path="/admin" exact strict component={Admin} createToken={createToken} />
+        <PropsRoute path="/adminPanel" exact strict component={AdminPanel} removeToken={removeToken} />
       </Switch>
       <Footer />
     </ConfigContext.Provider>
