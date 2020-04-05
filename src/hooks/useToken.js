@@ -3,14 +3,19 @@ import { useEffect, useState } from 'react';
 export default function useToken(url) {
 
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [tokenMessage, setTokenMessage] = useState({});
 
   function createToken(token) {
     localStorage.setItem('token', token);
     setToken(token);
   };
 
-  function removeToken() {
+  function removeToken(message, error) {
     localStorage.removeItem('token');
+    setTokenMessage({
+      message,
+      error
+    });
     setToken(null);
   };
   
@@ -33,5 +38,5 @@ export default function useToken(url) {
     });
   }, [token]);
 
-  return { token, createToken, removeToken };
+  return { token, createToken, removeToken, tokenMessage };
 };

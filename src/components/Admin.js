@@ -1,36 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { ConfigContext } from '../routes';
-import queryString from 'query-string' 
+import Loader from './Loader';
 import Styles from 'styles/Admin.css';
 
-export default function Admin ({history, location, createToken}) {
+export default function Admin ({tokenMessage, createToken}) {
   const [login, setLogin] = useState({
     email: '',
     password: ''
   });
+  const [tokenMessageObj, setTokenMessageObj] = useState(tokenMessage);
   const [activeInput, setActiveInput] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState('');
-  const { url, token } = useContext(ConfigContext);
-
-  useEffect(() => {
-    const values = queryString.parse(location.search);
-
-    if (token) {
-      history.push(`/adminPanel`);
-      return;
-    };
-
-    if (values.error) {
-      setError(values.error);
-      window.history.pushState(null, null, window.location.pathname);
-    };
-
-    if (values.response) {
-      setResponse(values.response);
-      window.history.pushState(null, null, window.location.pathname);
-    };
-  }, []);
+  const { url } = useContext(ConfigContext);
 
   function focus(e) {
     setActiveInput(e.target.id);
@@ -53,7 +36,9 @@ export default function Admin ({history, location, createToken}) {
   };
 
   function submit() {
+    if (loading) return;
     setError('');
+    setTokenMessageObj({});
     const emptyItems = Object.keys(login).every(item => login[item] !== '');
     if (!emptyItems) {
       setError('Some inputs are empty, please make sure all inputs are filled out.');
@@ -63,6 +48,7 @@ export default function Admin ({history, location, createToken}) {
       setError('The email you entered seems to be invalid, please double check and try again');
       return;
     };
+    setLoading(true);
     fetch(url + '/api/login', {
       method: 'POST',
       headers: {
@@ -70,13 +56,14 @@ export default function Admin ({history, location, createToken}) {
       },
       body: JSON.stringify(login)
     }).then(response => response.json()).then(response => {
+      setLoading(false);
       if (response.error) {
-        throw new Error(response.message)
+        setError(response.message)
+        return;
       };
-      setResponse(response.message);
-      createToken(response.token)
-      setTimeout(() => history.push('/adminPanel'), 500);
+      createToken(response.token);
     }).catch(err => {
+      setLoading(false);
       setError(err.message)
     });
   };
@@ -84,8 +71,8 @@ export default function Admin ({history, location, createToken}) {
   return (
     <div className={Styles.container}>
       <div className={Styles.subContainer}>
-        <div className={Styles.error}>{error}</div>
-        <div className={Styles.response}>{response}</div>
+        {(tokenMessageObj.error || error) && <div className={Styles.error}>{tokenMessageObj.message || error}</div>}
+        {((tokenMessageObj.message && !tokenMessageObj.error) || response) && <div className={Styles.response}>{tokenMessageObj.message || response}</div>}
         <div className={Styles.innerContainer}>
           <div className={Styles.header}>Admin login</div>
           <div>
@@ -111,7 +98,8 @@ export default function Admin ({history, location, createToken}) {
             />
           </div>
           <div onClick={submit} className={Styles.button}>
-            Login
+            <div>Login</div>
+            {loading && <Loader width='25px' height='25px' thickness='2px'></Loader>}
           </div>
         </div>
       </div>

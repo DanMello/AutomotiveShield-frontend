@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook,faInstagram, faYelp } from "@fortawesome/free-brands-svg-icons"
 // import { faCloud, faInstagram } from '@fortawesome/free-solid-svg-icons';
 
-export default function Footer () {
+export default function Footer ({footerColor}) {
   return (
-    <div className={Styles.container}>
+    <div className={Styles.container} style={{background: footerColor}}>
       <div className={Styles.subContainer}>
         <div className={Styles.mello}>
           <div className={Styles.powered}>Powered by</div>
