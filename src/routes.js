@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from './components/Header';
 import Admin from './components/Admin';
 import AdminPanel from './components/AdminPanel';
+import UploadPost from './components/UploadPost';
 import ChangeEmail from './components/ChangeEmail';
 import Home from './components/Home';
 import About from './components/About';
@@ -75,6 +76,7 @@ function AppRoutes() {
         <PropsRoute path="/contact" exact strict component={Contact} />
         <LoggedOutRoute path="/admin" exact strict component={Admin} createToken={createToken} tokenMessage={tokenMessage}/>
         <AdminRoute path="/adminPanel" exact strict component={AdminPanel} removeToken={removeToken} />
+        <AdminRoute path="/uploadpost" exact strict component={UploadPost} />
         <AdminRoute path="/changeemail"  exact strict component={ChangeEmail} createToken={createToken} />
       </Switch>
       <Footer footerColor={footerColor}/>

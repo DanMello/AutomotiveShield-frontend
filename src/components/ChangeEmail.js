@@ -84,15 +84,17 @@ export default function ChangeEmail ({location, createToken}) {
 
   return (
     <AdminWrapper heading={'Update Email'} backButton='/adminPanel'>
-      {error && <Error error={error} />}
-      <div className={Styles.response}>{response}</div>
-      <div className={Styles.currentEmailContainer}>
-        <div className={Styles.currentEmailLabel}>Current Email</div>
-        <div className={Styles.currentEmail}>{currentEmail}</div>
+      <div className={Styles.container}>
+        {error && <Error error={error} />}
+        <div className={Styles.response}>{response}</div>
+        <div className={Styles.currentEmailContainer}>
+          <div className={Styles.currentEmailLabel}>Current Email</div>
+          <div className={Styles.currentEmail}>{currentEmail}</div>
+        </div>
+        <Input label={'New Email'} value={email} onChange={changeEmail} type={'email'}/>
+        <Input label={'Current Password'} value={password} onChange={changePassword} type={'password'}/>
+        <LoadingButton title='Update Email' onClick={sendToServer} loading={loading}/>
       </div>
-      <Input label={'New Email'} value={email} onChange={changeEmail} type={'email'}/>
-      <Input label={'Current Password'} value={password} onChange={changePassword} type={'password'}/>
-      <LoadingButton title='Update Email' onClick={sendToServer} loading={loading}/>
     </AdminWrapper>
   );
 };

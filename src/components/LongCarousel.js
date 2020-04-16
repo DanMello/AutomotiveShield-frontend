@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Styles from 'styles/LongCarousel.css';
 
-export default function LongCarousel ({children, itemWidth, dots, activeColor, normalColor, noRow, time, returnIndex}) {
+export default function LongCarousel ({children, itemWidth, dots, activeColor, normalColor, noRow, time, returnIndex, stopDrag}) {
   const [index, setIndex] = useState(0);
   const [width, setWidth] = useState(0);
   const [currentInterval, setIntervalMethod] = useState(null);
@@ -29,6 +29,7 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
   }, []);
   const childrenLength = childrenReduced.length;
   const bind = useDrag(({ down, movement: [mx], direction: [xDir], cancel}) => {
+    if (stopDrag) cancel();
     if (down) {
       if (currentInterval && time) {
         clearInterval(currentInterval)

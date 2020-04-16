@@ -16,7 +16,9 @@ module.exports = {
     rules: [
       {
         test: /\.(js)$/,
-        exclude: /(node_modules)/,
+        exclude: [
+          /(node_modules)/
+        ],
         loader: 'babel-loader'
       },
       {
@@ -42,7 +44,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: 'public/assets', to: 'assets' }
+      { from: 'public/assets', to: 'assets' },
     ]),
     new HtmlWebpackPlugin({
       template: './public/index.html'

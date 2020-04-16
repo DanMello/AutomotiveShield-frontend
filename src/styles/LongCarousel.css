@@ -37,6 +37,10 @@
   margin-left: 20px;
 }
 
+.arrowLeft:hover, .arrowRight:hover {
+  opacity: .8;
+}
+
 .animatedContainer {
   display: flex;
 }

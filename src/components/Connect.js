@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ConfigContext } from '../routes';
 import Banner from './Banner';
+import LoadingButton from './LoadingButton';
 import Styles from 'styles/Connect.css';
 
 export default function Connect () {
@@ -14,6 +15,7 @@ export default function Connect () {
   const [activeInput, setActiveInput] = useState('');
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false);
   const { url } = useContext(ConfigContext);
 
   function focus(e) {
@@ -47,6 +49,7 @@ export default function Connect () {
       setError('The email you entered seems to be invalid, please double check and try again');
       return;
     };
+    setLoading(true);
     fetch(url + '/api/contact', {
       method: 'POST',
       headers: {
@@ -57,8 +60,10 @@ export default function Connect () {
       if (response.error) {
         throw new Error(response.message)
       };
+      setLoading(false);
       setResponse(response.message)
     }).catch(err => {
+      setLoading(false);
       setError(err.message)
     });
   };
@@ -115,9 +120,7 @@ export default function Connect () {
             onFocus={focus}
             onBlur={blur}
           />
-          <div className={Styles.button} onClick={submit}>
-            Send message
-          </div>
+          <LoadingButton title='Send message' onClick={submit} loading={loading} />
         </div>
       </div>
     </div>

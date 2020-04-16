@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
   padding-left: 20px;
@@ -29,7 +29,7 @@
 }
 
 .bottomContainer {
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .iconContainer {

@@ -123,6 +123,12 @@ export default function ProtectionServices () {
     setSizeForAbsoluteComponents();
   };
 
+  function ImageLoaded() {
+    if (imageContainer.current !== null) {
+      setImageContainerHeight(imageContainer.current.offsetHeight);
+    };
+  };
+
   function handleScroll () {
     const scrollTop =  window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     const sectionOneOffsetHeight = sectionOne.current.offsetHeight;
@@ -173,8 +179,9 @@ export default function ProtectionServices () {
         <div className={Styles.imageContainer}>
           {carIntroTransitions.map(({ item, props, key }) => (
             <animated.div style={props} key={key} className={Styles.animatedCarContainer} ref={imageContainer}>
-              <img 
-                src={item.url} 
+              <img
+                onLoad={ImageLoaded}
+                src={item.url}
                 className={Styles.image}
               />
             </animated.div>
