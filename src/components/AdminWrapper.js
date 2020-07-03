@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Styles from 'styles/AdminWrapper.css';
 
-export default function AdminWrapper ({children, heading, backButton}) {
+export default function AdminWrapper ({children, heading, backButton, method, methodLabel, color, fontColor}) {
   return (
     <div className={Styles.container}>
       <div className={Styles.subContainer}>
@@ -13,7 +13,7 @@ export default function AdminWrapper ({children, heading, backButton}) {
             <FontAwesomeIcon icon={faChevronLeft} className={Styles.icon} />
           </Link>
           <div className={Styles.header}>{heading}</div>
-          <div></div>
+          {method ? <div onClick={method} className={Styles.button} style={{"backgroundColor": color, "color": fontColor}}>{methodLabel}</div> : <div></div>}
         </div>
         <div className={Styles.bottomContainer}>
           {children}

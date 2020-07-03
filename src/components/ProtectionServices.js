@@ -10,12 +10,12 @@ export default function ProtectionServices () {
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const [step, setStep] = useState(0);
   const [topContainerHeight, setTopContainerHeight] = useState(0);
-  const [imageContainerHeight, setImageContainerHeight] = useState(280);
+  const [imageHeight, setImageHeight] = useState(0);
   const [descriptionContainerHeight, setDescriptionContainerHeight] = useState(0);
   const [initialDescriptionContainerHeight, setInitialDescriptionContainerHeight] = useState(0);
-  const centeredMargin = ((window.innerHeight - (imageContainerHeight + initialDescriptionContainerHeight)) - topContainerHeight) / 2;
+  const centeredMargin = ((window.innerHeight - (imageHeight + initialDescriptionContainerHeight)) - topContainerHeight) / 2;
   const topContainer = useRef(null);
-  const imageContainer = useRef(null);
+  const imageRef = useRef(null);
   const descriptionContainer = useRef(null);
   const sectionOne = useRef(null);
   const sectionTwo = useRef(null);
@@ -42,7 +42,7 @@ export default function ProtectionServices () {
         Standard paint protection covers the hood, 
         front bumper, fenders, and mirrors.
       `,
-      link: '#'
+      link: '/work?search=Standard Paint Protection'
     },
     { 
       id: 1,
@@ -51,7 +51,7 @@ export default function ProtectionServices () {
         Full front wrap paint protection covers
         the entire front hood, front bumper, fenders, mirrors and headlights.
       `,
-      link: '#'
+      link: '/work?search=Full Front Wrap Paint Protection'
     },
     { 
       id: 2,
@@ -60,7 +60,7 @@ export default function ProtectionServices () {
         Full car wrap paint protection covers 
         the entire body providing full protection for your car.
       `,
-      link: '#'
+      link: '/work?search=Full Car Wrap Paint Protection'
     },
     { 
       id: 3, 
@@ -68,7 +68,7 @@ export default function ProtectionServices () {
       description: `
         Stealth car wrap paint protection also covers the entire body of your car providing full coverage with a matte finish.
       `,
-      link: '#'
+      link: '/work?search=Stealth Wrap Paint Protection'
     }
   ];
   const transitions = useTransition(titles[step], item => item.id, {
@@ -92,7 +92,7 @@ export default function ProtectionServices () {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+}, []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -102,10 +102,10 @@ export default function ProtectionServices () {
   }, [step]);
 
   function setSizeForAbsoluteComponents() {
-    if (imageContainer.current !== null) {
-      if (imageContainer.current.offsetHeight > 200) {
-        setImageContainerHeight(imageContainer.current.offsetHeight);
-      };
+    if (imageRef.current !== null) {
+      const ratio = 543 / 322;
+      const height = imageRef.current.offsetWidth / ratio;
+      setImageHeight(height);
     };
     if (descriptionContainer.current !== null) {
       if (descriptionContainer.current.offsetHeight > descriptionContainerHeight) {
@@ -121,12 +121,6 @@ export default function ProtectionServices () {
     setScreenSize(window.innerWidth);
     setScreenHeight(window.innerHeight);
     setSizeForAbsoluteComponents();
-  };
-
-  function ImageLoaded() {
-    if (imageContainer.current !== null) {
-      setImageContainerHeight(imageContainer.current.offsetHeight);
-    };
   };
 
   function handleScroll () {
@@ -168,25 +162,29 @@ export default function ProtectionServices () {
     };
   };
   return (
-    <div style={{'marginBottom': imageContainerHeight + descriptionContainerHeight + 60 + 'px'}}>
+    <div style={{'marginBottom': imageHeight + descriptionContainerHeight + 60 + 'px'}}>
       <div className={(screenSize > 768 & screenHeight > 840) ? Styles.test1 : null}>
         <div className={Styles.ourServicesContainer} ref={topContainer}>
           <div className={Styles.ourServices}>Our Services</div>
           <div className={Styles.line2}></div>
         </div>
       </div>
+
       <div className={Styles.test2} style={{"top": centeredMargin < 0 ? 0 : centeredMargin + 'px'}}>
         <div className={Styles.imageContainer}>
           {carIntroTransitions.map(({ item, props, key }) => (
-            <animated.div style={props} key={key} className={Styles.animatedCarContainer} ref={imageContainer}>
-              <img
-                onLoad={ImageLoaded}
-                src={item.url}
+            <animated.div style={props} key={key} className={Styles.animatedCarContainer}>
+              <div
+                ref={imageRef}
+                style={{
+                  backgroundImage: `url(${item.url})`,
+                  height: `${imageHeight}px`
+                }}
                 className={Styles.image}
               />
             </animated.div>
           ))}
-          <div className={Styles.descriptionContainer} style={{"top": imageContainerHeight}}>
+          <div className={Styles.descriptionContainer} style={{"top": imageHeight + 20}}>
             {transitions.map(({ item, key, props }) => 
               item &&
                 <animated.div key={key} style={props} ref={descriptionContainer}>
@@ -203,8 +201,9 @@ export default function ProtectionServices () {
             )}
           </div>
         </div>
+        
         {screenSize > 768 && 
-          <animated.div className={Styles.scrollDownContainer} style={{...hideProps, "top": imageContainerHeight + initialDescriptionContainerHeight + (centeredMargin / 2)}}>
+          <animated.div className={Styles.scrollDownContainer} style={{...hideProps, "top": imageHeight + initialDescriptionContainerHeight + (centeredMargin / 2)}}>
             <div className={Styles.scrollDown}>Scroll down to see more services</div>
             <FontAwesomeIcon icon={faChevronDown} className={Styles.rightIcon}/>
           </animated.div>

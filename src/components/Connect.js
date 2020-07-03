@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ConfigContext } from '../routes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import Banner from './Banner';
 import LoadingButton from './LoadingButton';
 import Styles from 'styles/Connect.css';
@@ -16,7 +18,7 @@ export default function Connect () {
   const [error, setError] = useState('');
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
-  const { url } = useContext(ConfigContext);
+  const { url, isMobile } = useContext(ConfigContext);
 
   function focus(e) {
     setActiveInput(e.target.id);
@@ -70,11 +72,12 @@ export default function Connect () {
 
   return (
     <div>
-      <Banner heading={'Contact us'} color='white' fontColor='#444'/>
+      <Banner heading={'Contact us'} color='white' fontColor='#444' paddingBottom={'10px'}/>
       <div className={Styles.container}>
         <div className={Styles.subContainer}>
           <div className={Styles.response}>{response}</div>
           <div className={Styles.error}>{error}</div>
+
           <div className={Styles.doubleInput}>
             <input
               id='firstName'

@@ -1,15 +1,229 @@
 .container {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  align-items: center;
+  flex-direction: column;
+  /* margin-top: 40px;
+  margin-bottom: 40px; */
+  /* background: #f1f1f1; */
+}
+
+.inputContainer {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: white;
+  z-index: 996;
+  height: 67px;
+  box-shadow: 0 1px 0 rgba(12,13,14,0.15);
+}
+
+.inputSubContainer {
+  width: 600px;
+  position: relative;
 }
 
 .input {
-  font-size: 18px;
+  width: 100%;
+  font-size: 22px;
+  padding: 5px;
+  text-align: center;
+  padding: 10px;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.iconContainer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 20px;
+  color: #ccc;
+}
+
+.uploadContainer {
+  background: white;
+  position: relative;
+}
+
+.heading {
+  font-weight: bold;
+  color: #444;
+  font-size: 25px;
+  /* text-align: center; */
+  margin-top: 20px;
+}
+
+.carHeading {
+  margin-top: 5px;
+  font-size: 20px;
+  color: #444;
+}
+
+.description {
+  margin-top: 5px;
+  color: #444;
+  font-size: 16px;
+}
+
+.date {
+  color: #555;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.borderContainer {
+  border-left-width: 1px;
+  border-left-color: #ccc;
+  border-left-style: solid;
+  border-right-width: 1px;
+  border-right-color: #ccc;
+  border-right-style: solid;
+  width: 100%;
+  max-width: 600px;
+}
+
+.paddingContainer {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+.buttonContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadMoreButton {
+  color: white;
+  background: #ff9f00;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.scrollUpContainer {
+  display: flex;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.scrollUpButton {
+  color: #444;
+  font-weight: bold;
+}
+
+.upIcon {
+  margin-left: 5px;
+  color: #444;
+}
+
+.allPosts {
+  color: #444;
+}
+
+.uploadPostContainer {
+  padding: 10px;
+  background: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 67px;
+  z-index: 900;
+  box-shadow: 0 1px 0 rgba(12,13,14,0.15);
+}
+
+.uploadLink {
+  display: flex;
+  text-decoration: none;
+  cursor: pointer;
+  color: #ff9f00;
+}
+
+.uploadHeading {
+
+}
+
+.noUploadsFound {
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  color: #444;
+}
+
+.uploadIcon {
+  margin-left: 5px;
+}
+
+.number {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 899;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  background:rgba(0,0,0,0.5);
+  color: white;
+  cursor: pointer;
+}
+
+.editPost {
+  color: #ff9f00;
+  text-decoration: none;
+  /* position: absolute; */
+  /* right: 10px; */
+  background: white;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-shadow: 0 1px 0 rgba(12,13,14,0.15);
+}
+
+.editIcon {
+  margin-left: 5px;
+}
+
+@media (max-width: 1100px) {
+
 }
 
 
 @media (max-width: 800px) {
-
+  .inputContainer {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .inputSubContainer, .borderContainer {
+    width: 100%;
+  }
+  .input {
+    font-size: 16px;
+  }
+  .uploadContainer {
+    width: 100%;
+  }
 }

@@ -2,16 +2,50 @@ import React, { useEffect, useContext, useState } from 'react';
 import { ConfigContext } from '../routes';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faCog, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faCog, faEnvelope, faCar, faUser } from '@fortawesome/free-solid-svg-icons';
 import Loader from './Loader';
 import Error from './Error';
 import Styles from 'styles/AdminPanel.css';
 
+function SettingsArray ({array}) {
+  return array.map((item, i) => {
+    return (
+      <Link key={i} to={item.link} className={Styles.inputContainer}>
+        <FontAwesomeIcon icon={item.icon} className={Styles.firstIcon}/>
+        <label className={Styles.label}>{item.label}:</label>
+        <div className={Styles.input}>{item.input}</div>
+        <FontAwesomeIcon icon={faChevronRight} className={Styles.icon}/>
+      </Link>
+    );
+  })
+};
+
 export default function AdminPanel ({removeToken}) {
 
-  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
   const [error, setError] = useState('');
   const { url, token } = useContext(ConfigContext);
+
+  const array = [
+    {
+      label: 'Services',
+      input: user.services && user.services.length + ' different services.',
+      link: `/updateservices`,
+      icon: faCar
+    },
+    {
+      label: 'Email',
+      input: user.email,
+      link: `/changeemail?email=${user.email}`,
+      icon: faEnvelope
+    },
+    {
+      label: 'Password',
+      input: '***********',
+      link: `/changepassword`,
+      icon: faUser
+    }, 
+  ];
 
   useEffect(() => {
     fetch(url + '/api/getUser', {
@@ -24,7 +58,8 @@ export default function AdminPanel ({removeToken}) {
       if (response.error) {
         removeToken(response.message, true);
       };
-      setEmail(response.email);
+      console.log(response)
+      setUser(response.user);
     }).catch(err => {
       setError(err.message + ' Please refresh.');
     });
@@ -50,7 +85,6 @@ export default function AdminPanel ({removeToken}) {
 
   return (
     <div className={Styles.container}>
-
       <div className={Styles.subContainer}>
         <div className={Styles.headingContainer}>
           <FontAwesomeIcon icon={faCog} className={Styles.cogIcon}/>
@@ -58,15 +92,7 @@ export default function AdminPanel ({removeToken}) {
         </div>
         <div className={Styles.bottomContainer}>
           {error && <Error error={error} />}
-          <div>  
-            <Link to={`/changeemail?email=${email}`} className={Styles.inputContainer}>
-              <FontAwesomeIcon icon={faEnvelope} className={Styles.firstIcon}/>
-              <label className={Styles.label}>Email: </label>
-              <div className={Styles.input}>{email}</div>
-              <FontAwesomeIcon icon={faChevronRight} className={Styles.icon}/>
-            </Link>
-          </div>
-
+          <SettingsArray array={array} />
           <div className={Styles.button} onClick={logOut}>Log Out</div>
         </div>
       </div>

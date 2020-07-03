@@ -1,12 +1,28 @@
 import React, { useRef, useState, useEffect } from 'react';
 import clamp from 'lodash-es/clamp';
 import { useDrag } from 'react-use-gesture';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring, a } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import Styles from 'styles/LongCarousel.css';
 
-export default function LongCarousel ({children, itemWidth, dots, activeColor, normalColor, noRow, time, returnIndex, stopDrag}) {
+export default function LongCarousel ({
+  children, 
+  itemWidth, 
+  dots, 
+  activeColor, 
+  normalColor, 
+  noRow, 
+  time,
+  returnIndex, 
+  stopDrag,
+  carouselIndex,
+  activeCarousels,
+  setActiveCarousels,
+  forceUpdate,
+  arrowDots,
+  i
+}) {
   const [index, setIndex] = useState(0);
   const [width, setWidth] = useState(0);
   const [currentInterval, setIntervalMethod] = useState(null);
@@ -29,6 +45,17 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
   }, []);
   const childrenLength = childrenReduced.length;
   const bind = useDrag(({ down, movement: [mx], direction: [xDir], cancel}) => {
+    if (activeCarousels !== undefined) {
+      if (activeCarousels.indexOf(carouselIndex) === -1) {
+        setActiveCarousels(prevState => {
+          if (prevState.indexOf(carouselIndex) === -1) {
+            return [...prevState, carouselIndex]
+          } else {
+            return [...prevState]
+          };
+        });
+      };
+    };
     if (stopDrag) cancel();
     if (down) {
       if (currentInterval && time) {
@@ -64,6 +91,28 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
       }, time));
     };
   }, []);
+
+  useEffect(() => {
+    if (activeCarousels !== undefined) {
+      if (activeCarousels.length > 1) {
+        if (activeCarousels[0] === carouselIndex) {
+          setIndex(0);
+          forceUpdate(prevState => !prevState);
+          setActiveCarousels(prevState => {
+            let array = prevState;
+            array.shift()
+            return array
+          });
+        };
+      };
+    };
+  }, [activeCarousels]);
+  
+  useEffect(() => {
+    if (i) {
+      setIndex(i);
+    }
+  }, [i])
 
   useEffect(() => {
     return () => {
@@ -120,6 +169,17 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
   };
 
   function increment() {
+    if (activeCarousels !== undefined) {
+      if (activeCarousels.indexOf(carouselIndex) === -1) {
+        setActiveCarousels(prevState => {
+          if (prevState.indexOf(carouselIndex) === -1) {
+            return [...prevState, carouselIndex]
+          } else {
+            return [...prevState]
+          };
+        });
+      };
+    };
     if (index === childrenLength - rows) {
       setIndex(0);
       return;
@@ -128,6 +188,17 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
   };
 
   function decrement() {
+    if (activeCarousels !== undefined) {
+      if (activeCarousels.indexOf(carouselIndex) === -1) {
+        setActiveCarousels(prevState => {
+          if (prevState.indexOf(carouselIndex) === -1) {
+            return [...prevState, carouselIndex]
+          } else {
+            return [...prevState]
+          };
+        });
+      };
+    };
     if (index === 0) {
       setIndex(childrenLength - rows);
       return;
@@ -150,8 +221,9 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
         </div>
         {!dots && <FontAwesomeIcon icon={faChevronRight} className={Styles.arrowRight} onClick={increment}/>}
       </div>
-      {dots &&
+      {dots && children.length > 1 &&
         <div className={Styles.carouselSubContainer}>
+          {arrowDots && <FontAwesomeIcon icon={faChevronLeft} className={Styles.arrowLeftSmall} onClick={decrement} /> }
           <div className={Styles.carouselButtonContainer}>
             {children.map((_, i) => {
               return (
@@ -168,6 +240,7 @@ export default function LongCarousel ({children, itemWidth, dots, activeColor, n
               );
             })}
           </div>
+          {arrowDots && <FontAwesomeIcon icon={faChevronRight} className={Styles.arrowRightSmall} onClick={increment}/>}
         </div>
       }
     </div>

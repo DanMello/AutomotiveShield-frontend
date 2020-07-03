@@ -1,6 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .subContainer {
@@ -75,4 +76,29 @@
 
 .button:hover {
   opacity: .8;
+}
+
+.detailsContainer {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  /* align-items: ce; */
+  margin-bottom: 20px;
+}
+
+.detailsContainerMobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.phone, .email {
+  margin-left: 10px;
+  /* color: #007dff; */
+  color: #ff9f00;
+}
+
+.phoneIcon, .emailIcon {
+  color: #444;
 }

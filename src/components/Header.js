@@ -104,7 +104,7 @@ function MobileHeader ({token}) {
   };
   return (
     <div className={MobileStyles.mainContainer}>
-      <Link className={MobileStyles.logoContainer} to='/home'>
+      <Link className={MobileStyles.logoContainer} to='/'>
         <img src='assets/autologo.png' className={MobileStyles.logo} />
       </Link>
       <div></div>

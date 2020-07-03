@@ -37,6 +37,20 @@
   margin-left: 20px;
 }
 
+.arrowLeftSmall {
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+  color: rgb(68, 68, 68);
+}
+
+.arrowRightSmall {
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+  color: rgb(68, 68, 68);
+}
+
 .arrowLeft:hover, .arrowRight:hover {
   opacity: .8;
 }
@@ -62,6 +76,7 @@
 .carouselSubContainer {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
 }
 

@@ -70,7 +70,7 @@
 }
 
 .carHeading {
-  font-size: 30px;
+  font-size: 23px;
   margin: 0;
 }
 
@@ -80,7 +80,6 @@
 
 .car {
   margin-top: 10px;
-  font-weight: bold;
   font-size: 20px;
 }
 
@@ -145,6 +144,19 @@
   padding-right: 5px;
   font-weight: bold;
   text-align: center;
+}
+
+.seeMore {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #444;
+}
+
+.date {
+  color: #555;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 @media (max-width: 1110px) {

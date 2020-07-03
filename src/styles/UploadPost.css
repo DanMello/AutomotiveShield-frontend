@@ -1,6 +1,5 @@
 .container {
   position: relative;
-  /* overflow: hidden; */
 }
 
 .pictureContainer {
@@ -25,22 +24,53 @@
   width: 100%;
 }
 
+
+.buttonContainerUpload {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 10px;
+  background: #ff9f00;
+  border-radius: 5px;
+}
+
 .heading {
-  color: #444;
-  font-size: 20px;
+  color: white;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.headingContainer {
+.icon {
+  color: white;
+  margin-left: 5px;
+}
+
+.headingContainerTop {
   display: flex;
   align-items: center;
   position: relative;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.icon {
-  color: #444;
-  margin-left: 5px;
+.trashIconContainer {
+
+  padding: 10px;
+  background:rgba(0,0,0,0.7);
+  position: absolute;
+  z-index: 899;
+  border-radius: 5px;
+  /* border-radius: 50%; */
+  left: 10px;
+  cursor: pointer;
+  bottom: 10px;
+  color: white;
+}
+
+.trashIcon {
+  color: white;
+  /* font-size: 20px; */
 }
 
 .fileInput {
@@ -87,6 +117,10 @@
 .loadingContainer {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .progress {
@@ -121,11 +155,11 @@
   padding: 20px;
 }
 
-.buttonContainer {
+.Upload {
   padding: 20px;
   background:rgba(0,0,0,0.8);
   position: absolute;
-  z-index: 999;
+  z-index: 996;
   border-radius: 50%;
 }
 
@@ -144,10 +178,44 @@
   padding: 10px;
   background:rgba(0,0,0,0.8);
   position: absolute;
-  z-index: 999;
+  z-index: 996;
   border-radius: 5px;
   color: white;
   top: 10px;
   cursor: pointer;
   left: 10px;
+}
+
+.response {
+  color: green;
+  position: absolute;
+  top: 10px;
+  text-align: center;
+}
+
+.selectContainer {
+  margin-top: 20px;
+}
+
+.select {
+  width: 100%;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.thumbnailHeading {
+  margin-bottom: 20px;
+  color: #444;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.loadingContainerTop {
+  display: flex;
+  align-items: center;
+}
+
+.loadingHeading {
+  column-rule: #444;
+  font-size: 20px;
 }

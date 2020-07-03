@@ -4,7 +4,7 @@ import { faPlay, faPause, faVolumeMute, faVolumeUp } from '@fortawesome/free-sol
 import { animated, useSpring } from 'react-spring';
 import Styles from 'styles/Video.css';
 
-export default function Video ({tempUrl, item, index, i}) {
+export default function Video ({url, thumbnailUrl, item, index, i, forceUpdate}) {
 
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -28,6 +28,18 @@ export default function Video ({tempUrl, item, index, i}) {
     };
   }, [index]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (timeOut) clearTimeout(timeOut);
+    if (i === index) {
+      video.pause();
+      video.currentTime = 0;
+      setMuted(true);
+      setPlaying(false);
+      setHide(false);
+    };
+  }, [forceUpdate]);
+
   function videoClicked() {
     if (timeOut) clearTimeout(timeOut);
     const video = videoRef.current;
@@ -40,6 +52,7 @@ export default function Video ({tempUrl, item, index, i}) {
   };
 
   function toggleVideo() {
+    if (hide) return;
     if (timeOut) clearTimeout(timeOut);
     const video = videoRef.current;
     if (video.paused) {
@@ -56,6 +69,7 @@ export default function Video ({tempUrl, item, index, i}) {
   };
 
   function toggleMuted() {
+    if (hide) return;
     setMuted(prevState => !prevState);
   };
 
@@ -68,8 +82,6 @@ export default function Video ({tempUrl, item, index, i}) {
     setTimeLeft(time);
   };
 
-  console.log(timeLeft)
-
   return (
     <div>
       <div 
@@ -78,7 +90,7 @@ export default function Video ({tempUrl, item, index, i}) {
           backgroundImage: `
           linear-gradient(rgba(0, 0, 0, 0.6),
           rgba(0, 0, 0, 0.6)),
-          url(${tempUrl + item.thumbnailName})
+          url(${thumbnailUrl})
           `
         }}
       >
@@ -109,14 +121,14 @@ export default function Video ({tempUrl, item, index, i}) {
           ref={videoRef}
           onClick={videoClicked}
           className={Styles.video}
-          poster={tempUrl + item.thumbnailName}
+          poster={thumbnailUrl}
           onTimeUpdate={timeUpdate}
           playsInline={true}
           muted={muted}
           loop={true}
         >
           <source 
-            src={tempUrl + item.filename} 
+            src={url} 
             type={item.mimetype} 
           />
         </video>

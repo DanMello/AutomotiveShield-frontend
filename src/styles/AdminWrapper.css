@@ -49,6 +49,13 @@
   color: #444;
 }
 
+.button {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
 @media (max-width: 800px) {
   .subContainer {
     width: 95%;
