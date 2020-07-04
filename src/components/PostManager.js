@@ -34,6 +34,7 @@ export default function PostManger ({history, heading}) {
   const videoTypes = ['video/quicktime', 'video/mp4'];
   const imageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
   const values = queryString.parse(location.search);
+  const userDataUrl = env === 'production' ? '/assets' : url;
   let postId = values.postId;
 
   useEffect(() => {
@@ -260,8 +261,8 @@ export default function PostManger ({history, heading}) {
                     }
                     {(videoTypes.includes(item.mimetype)) ?
                       <Video 
-                        url={item.saved ? url + item.publicFilePath : tempUrl + item.filename } 
-                        thumbnailUrl={item.saved ? url + item.publicThumbnailPath : tempUrl + item.thumbnailName} 
+                        url={item.saved ? userDataUrl + item.publicFilePath : tempUrl + item.filename } 
+                        thumbnailUrl={item.saved ? userDataUrl + item.publicThumbnailPath : tempUrl + item.thumbnailName} 
                         item={item} 
                         index={index} 
                         i={i} 
@@ -269,7 +270,7 @@ export default function PostManger ({history, heading}) {
                       :
                       <div 
                         className={Styles.picture}
-                        style={{backgroundImage: item.saved ? `url(${url}${item.publicFilePath})` : `url(${tempUrl}${item.filename})`}}
+                        style={{backgroundImage: item.saved ? `url(${userDataUrl}${item.publicFilePath})` : `url(${tempUrl}${item.filename})`}}
                       />
                     }
                   </div>

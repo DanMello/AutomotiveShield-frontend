@@ -6,7 +6,7 @@ import Banner from './Banner';
 import LoadingButton from './LoadingButton';
 import Styles from 'styles/Connect.css';
 
-export default function Connect () {
+export default function Connect ({heading}) {
 
   const [contact, setContact] = useState({
     firstName: '',
@@ -72,7 +72,7 @@ export default function Connect () {
 
   return (
     <div>
-      <Banner heading={'Contact us'} color='white' fontColor='#444' paddingBottom={'10px'}/>
+      <Banner heading={heading} color='white' fontColor='#444' paddingBottom={'10px'}/>
       <div className={Styles.container}>
         <div className={Styles.subContainer}>
           <div className={Styles.response}>{response}</div>

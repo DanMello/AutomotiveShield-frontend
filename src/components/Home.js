@@ -24,7 +24,7 @@ export default function Home () {
       <Benefits />
       <OurWork />
       <HeadQuarters /> 
-      <Connect />
+      <Connect heading={"Contact us"}/>
     </div>
   );
 };

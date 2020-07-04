@@ -159,6 +159,22 @@
   margin-top: 10px;
 }
 
+.errorContainer {
+  margin-top: 20px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+.buttonRefresh {
+  cursor: pointer;
+  margin-top: 20px;
+  text-decoration: underline;
+}
+
 @media (max-width: 1110px) {
   .carouselContainer {
     display: flex;

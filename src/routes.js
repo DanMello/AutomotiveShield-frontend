@@ -7,6 +7,7 @@ import PostManager from './components/PostManager';
 import PostResponse from './components/PostResponse';
 import ChangeEmail from './components/ChangeEmail';
 import ChangeServices from './components/ChangeServices';
+import ChangePassword from './components/ChangePassword';
 import Service from './components/Service';
 import AddService from './components/AddService';
 import Home from './components/Home';
@@ -84,6 +85,7 @@ function AppRoutes() {
         <AdminRoute path="/uploadpost" exact strict component={PostManager} heading={'Create Post'} />
         <AdminRoute path="/editpost" exact strict component={PostManager} heading={'Edit Post'} />
         <AdminRoute path="/changeemail"  exact strict component={ChangeEmail} createToken={createToken} />
+        <AdminRoute path="/changepassword"  exact strict component={ChangePassword} />
         <AdminRoute path="/updateservices"  exact strict component={ChangeServices} />
         <AdminRoute path="/updateservices/service"  exact strict component={Service} />
         <AdminRoute path="/updateservices/addnewservice"  exact strict component={AddService} />

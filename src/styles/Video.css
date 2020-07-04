@@ -49,7 +49,7 @@
   z-index: 899;
   border-radius: 5px;
   /* border-radius: 50%; */
-  top: 10px;
+  bottom: 60px;
   cursor: pointer;
   right: 10px;
 }

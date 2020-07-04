@@ -8,7 +8,7 @@ import ConditionalWrapper from './ConditionalWrapper';
 import Styles from 'styles/HeadQuarters.css';
 import LongCarousel from './LongCarousel';
 
-export default function HeadQuarters() {
+export default function HeadQuarters({theme}) {
   const [location, setLocation] = useState('Florida');
   const { isMobile } = useContext(ConfigContext);
   const screenSize = useWindowResize();
@@ -21,10 +21,10 @@ export default function HeadQuarters() {
   };
 
   return (
-    <div>
-      <div className={Styles.container}>
+    <div id="contact">
+      <div className={Styles.container} style={theme === 'light' ? {background:'#f1f1f1'} : {background: '#131921'}}>
         <div className={Styles.subContainer}>
-          <div className={Styles.heading}>Headquarters</div>
+          <div className={Styles.heading} style={theme === 'light' ? {color: '#444'} : {color: 'white'}}>Headquarters</div>
           <div className={Styles.line}></div>
           <div className={Styles.anotherSubContainer}>
             <div className={Styles.locationContainer}>

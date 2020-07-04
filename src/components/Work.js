@@ -56,6 +56,7 @@ export default function Work () {
     let query = values.search;
     if (query) {
       setSearch(query);
+      return;
     };
     fetch(url + `/api/cars?limit=${limit}`).then(response => response.json())
     .then(response => {
@@ -76,12 +77,16 @@ export default function Work () {
       if (values.search) {
         window.history.pushState(null, null, window.location.pathname);
       };
-      fetch(url + `/api/searchwork?search=${search}`)
+      setLoading(true);
+      fetch(url + `/api/searchwork?search=${search}&limit=${limit}`)
       .then(response => response.json())
       .then(response => {
+        console.log(response)
+        setLoading(false);
         setCount(response.count);
         setUploads(response.cars);
       }).catch(err => {
+        setLoading(false);
         console.log(err)
       });
     };
@@ -93,13 +98,24 @@ export default function Work () {
 
   function loadMore() {
     setLoading(true);
-    fetch(url + `/api/cars?skip=${uploads.length}&limit=${limit}`).then(response => response.json())
-    .then(response => {
-      setLoading(false);
-      setUploads(prevState => [...prevState, ...response.cars]);
-    }).catch(err => {
-      console.log(err)
-    });
+    if (search) {
+      fetch(url + `/api/searchwork?search=${search}&skip=${uploads.length}&limit=${limit}`)
+      .then(response => response.json())
+      .then(response => {
+        setLoading(false);
+        setUploads(prevState => [...prevState, ...response.cars]);
+      }).catch(err => {
+        console.log(err)
+      });
+    } else {
+      fetch(url + `/api/cars?skip=${uploads.length}&limit=${limit}`).then(response => response.json())
+      .then(response => {
+        setLoading(false);
+        setUploads(prevState => [...prevState, ...response.cars]);
+      }).catch(err => {
+        console.log(err)
+      });
+    };
   };
 
   function searchData(e) {

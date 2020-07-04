@@ -7,6 +7,8 @@ import {useTransition, animated, useChain, config} from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
 import Styles from 'styles/OurWork.css';
+import PostContainer from './PostContainer';
+import Video from './Video';
 import ConditionalWrapper from './ConditionalWrapper';
 import GalleryStyles from 'styles/Gallery.css';
 
@@ -37,8 +39,11 @@ function FullScreenBackground({children, show, fullScreenRef}) {
 function Gallery({setShow, project, screenSize, show, position, url}) {
 
   const [index, setIndex] = useState(0);
-
+  const [forceUpdate, setForceUpdate] = useState(false);
+  
   const fullScreenContainerRef = useRef();
+
+  const videoType = ['video/quicktime', 'video/mp4'];
 
   const carouselDesktopTransitionRef = useRef();
   const carouselDesktopTransition = useTransition(show, null, {
@@ -95,17 +100,36 @@ function Gallery({setShow, project, screenSize, show, position, url}) {
               <div className={GalleryStyles.number}>{index + 1} / {project.uploads.length}</div>
               <div onClick={close} className={GalleryStyles.close}>x</div>
               <div className={GalleryStyles.carouselContainer}>
-                <LongCarousel activeColor={'#ff9f00'} normalColor={'#444'} dots={true} noRow={true} returnIndex={setIndex} arrowDots={true}>
+                <LongCarousel 
+                  activeColor={'#ff9f00'} 
+                  normalColor={'#444'} 
+                  dots={true} 
+                  noRow={true} 
+                  returnIndex={setIndex}
+                  forceUpdate={setForceUpdate}
+                  arrowDots={true}
+                  >
                   {project.uploads.map((item, i) => {
                     return (
                       <div key={i} className={GalleryStyles.imageSubContainer}>
-                        <div 
+                        {videoType.includes(item.mimetype) ?
+                          <Video
+                            url={url + item.publicFilePath} 
+                            thumbnailUrl={url + item.publicThumbnailPath} 
+                            item={item}
+                            index={index}
+                            i={i}
+                            forceUpdate={forceUpdate}
+                            />
+                          :
+                          <div 
                           className={GalleryStyles.imageContainer} 
                           style={{
-                            backgroundImage: `url(${url}/${item.publicFilePath})`, 
+                            backgroundImage: `url(${url}${item.publicFilePath})`, 
                             height: screenSize > 800 ? height : '300px'
-                          }} 
+                          }}
                           />
+                        }
                       </div>
                     );
                   })}
@@ -168,27 +192,43 @@ export default function OurWork() {
   const [project, setProject] = useState({});
   const [height, setHeight] = useState(0);
   const [cars, setCars] = useState([]);
+  const [error, setError] = useState('');
+  const [loadAgain, setLoadAgain] = useState(false);
   const container = useRef();
   const screenSize = useWindowResize();
-  const { url, token } = useContext(ConfigContext);
+  const { url, token, env } = useContext(ConfigContext);
+  const videoType = ['video/quicktime', 'video/mp4'];
+  const userDataUrl = env === 'production' ? '/assets' : url;
 
   useEffect(() => {
     if (document.body.classList.contains(GalleryStyles.fixed)) {
       document.body.classList.remove(GalleryStyles.fixed);
     };
+  }, []);
+
+  useEffect(() => {
+    setError('');
     fetch(url + `/api/cars?limit=6`).then(response => response.json())
     .then(response => {
+      if (response.error) {
+        setError(response.message);
+        return;
+      };
       setCars(response.cars);
     }).catch(err => {
-      console.log(err)
+      setError(err.message);
     });
-  }, []);
+  }, [loadAgain])
 
   useEffect(() => {
     if (container.current !== undefined) {
       setHeight(container.current.offsetHeight);
     };
-  })
+  });
+
+  function loadData() {
+    setLoadAgain(prevState => !prevState);
+  };
 
   function openPictures(project) {
     if (screenSize < 800) {
@@ -200,6 +240,8 @@ export default function OurWork() {
     setProject(project);
   };
 
+  console.log(cars)
+
   return (
     <div className={Styles.container}>
       <Gallery 
@@ -208,11 +250,16 @@ export default function OurWork() {
         screenSize={screenSize} 
         show={show}
         position={position}
-        url={url}
+        url={userDataUrl}
       />
       <div className={Styles.subContainer}>
         <div className={Styles.heading}>Our Recent Work</div>
         <div className={Styles.line}></div>
+        {error && 
+        <div className={Styles.errorContainer}>
+          <div className={Styles.error}>{error}</div>
+          <div className={Styles.buttonRefresh} onClick={loadData}>Click here to try again</div>
+        </div>}
         {cars.length > 0 &&
           <div className={Styles.containerForImages}>
             <LongCarousel itemWidth={450}>
@@ -224,7 +271,10 @@ export default function OurWork() {
                 return (
                   <div key={i} ref={container}>
                     <div className={Styles.imageContainer}>
-                      <div className={Styles.imageBackground} style={{backgroundImage: `url(${url}/${item.uploads[item.thumbnailIndex].publicFilePath})` }} />
+                      <div 
+                        className={Styles.imageBackground} 
+                        style={{backgroundImage: videoType.includes(item.uploads[item.thumbnailIndex].mimetype) ? `url(${userDataUrl}${item.uploads[item.thumbnailIndex].publicThumbnailPath})` : `url(${userDataUrl}${item.uploads[item.thumbnailIndex].publicFilePath})` }} 
+                        />
                       <div className={Styles.imageSubContainer}>
                         <h1 className={Styles.carHeading}>{item.service}</h1>
                         <div className={Styles.car}>{item.car}</div>

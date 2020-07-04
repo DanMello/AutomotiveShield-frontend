@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { ConfigContext } from '../routes';
 import DesktopStyles from 'styles/DesktopHeader.css';
 import MobileStyles from 'styles/MobileHeader.css';
